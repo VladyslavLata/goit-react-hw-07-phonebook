@@ -67,10 +67,8 @@ export const PhonebookForm = ({ onAddContact, onReviewName }) => {
           <Field type="tel" name="phone" />
           <ErrorText component="p" name="phone" />
         </label>
-        <AddButton type="submit" disabled={loading}>
-          {<Spinner loading={loading} />}
-          Add contact
-        </AddButton>
+        <AddButton type="submit">Add contact</AddButton>
+        <Spinner loading={loading} />
       </Form>
     </Formik>
   );

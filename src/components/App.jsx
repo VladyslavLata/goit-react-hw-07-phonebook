@@ -5,17 +5,23 @@ import { PhonebookForm } from './PhonebookForm/PhonebookForm';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
 import { filter } from 'redux/contacts/contactsSlice';
-import { getContacts, getFilterName } from 'redux/contacts/selectors';
+import {
+  getContacts,
+  getFilterName,
+  getErrorMessage,
+} from 'redux/contacts/selectors';
 import {
   fetchContacts,
   addNewContact,
   deleteContact,
 } from 'redux/contacts/operations';
+import { Message } from './Message/Message';
 
 export const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const name = useSelector(getFilterName);
+  const messageError = useSelector(getErrorMessage);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -59,6 +65,7 @@ export const App = () => {
           value={name}
           onChange={changeFilter}
         />
+        {messageError && <Message message={messageError} />}
         {visibleContacts.length > 0 && (
           <Contacts
             contacts={visibleContacts}
