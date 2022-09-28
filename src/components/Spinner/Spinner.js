@@ -1,7 +1,7 @@
 import { RotatingLines } from 'react-loader-spinner';
 import { SpinnerWrap } from './Spinner.styled';
 
-export const Spinner = () => {
+export const Spinner = ({ loading }) => {
   return (
     <SpinnerWrap>
       <RotatingLines
@@ -9,7 +9,7 @@ export const Spinner = () => {
         strokeWidth="5"
         animationDuration="0.75"
         width="24"
-        visible={true}
+        visible={loading}
       />
     </SpinnerWrap>
   );

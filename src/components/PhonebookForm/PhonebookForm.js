@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import { LabelName, AddButton } from './Phonebook.styled';
 import styled from 'styled-components';
+import { Spinner } from 'components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
+import { getLoading } from 'redux/contacts/selectors';
 
 const ErrorText = styled(ErrorMessage)`
   color: red;
@@ -13,21 +16,22 @@ const schema = yup.object().shape({
     .string()
     .strict()
     .trim()
-    .min(2)
+    .min(1)
     .max(30)
     .matches(
       /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
       'Name may contain only letters, apostrophe, dash and spaces'
     )
     .required(),
-  number: yup
+  phone: yup
     .string()
     .strict()
     .trim()
     .matches(
       /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{2}\)?)\s?-?\s?(\(?\d{2}\)?)?$/,
       'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-    ),
+    )
+    .required(),
 });
 
 const initialValues = {
@@ -36,6 +40,7 @@ const initialValues = {
 };
 
 export const PhonebookForm = ({ onAddContact, onReviewName }) => {
+  const loading = useSelector(getLoading);
   const handleSubmit = (values, actions) => {
     if (onReviewName(values.name)) {
       alert(`${values.name} is already in contacts.`);
@@ -62,7 +67,10 @@ export const PhonebookForm = ({ onAddContact, onReviewName }) => {
           <Field type="tel" name="phone" />
           <ErrorText component="p" name="phone" />
         </label>
-        <AddButton type="submit">Add contact</AddButton>
+        <AddButton type="submit" disabled={loading}>
+          {<Spinner loading={loading} />}
+          Add contact
+        </AddButton>
       </Form>
     </Formik>
   );
