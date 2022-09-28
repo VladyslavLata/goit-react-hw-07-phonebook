@@ -5,7 +5,6 @@ export const LabelName = styled.p`
 `;
 
 export const AddButton = styled.button`
-  position: relative;
   display: flex;
   justify-content: center;
   padding: ${p => p.theme.space[3]}px;

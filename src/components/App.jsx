@@ -4,11 +4,13 @@ import { Section } from './Section/Section';
 import { PhonebookForm } from './PhonebookForm/PhonebookForm';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
+import { Spinner } from './Spinner/Spinner';
 import { filter } from 'redux/contacts/contactsSlice';
 import {
   getContacts,
   getFilterName,
   getErrorMessage,
+  getLoading,
 } from 'redux/contacts/selectors';
 import {
   fetchContacts,
@@ -21,6 +23,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const name = useSelector(getFilterName);
+  const loading = useSelector(getLoading);
   const messageError = useSelector(getErrorMessage);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ export const App = () => {
           onAddContact={addContact}
           onReviewName={reviewNameInContacts}
         />
+        <Spinner loading={loading} size={'56'} />
       </Section>
       <Section title="Contacts">
         <Filter

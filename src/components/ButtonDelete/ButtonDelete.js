@@ -19,7 +19,7 @@ export const ButtonDelete = ({ onRemoveContact, id, children }) => {
         onRemoveContact(id);
       }}
     >
-      <Spinner loading={loading} />
+      <Spinner loading={loading} size={'24'} />
       {children}
     </Button>
   );
