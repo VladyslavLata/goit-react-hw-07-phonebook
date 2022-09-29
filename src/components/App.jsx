@@ -6,30 +6,19 @@ import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
 import { Spinner } from './Spinner/Spinner';
 import { filter } from 'redux/contacts/contactsSlice';
-import {
-  selectContacts,
-  selectFilterName,
-  selectErrorMessage,
-  selectLoading,
-  selectVisibleContacts,
-} from 'redux/contacts/selectors';
-import {
-  fetchContacts,
-  addNewContact,
-  deleteContact,
-} from 'redux/contacts/operations';
+import { operations, selectors } from 'redux/contacts';
 import { Message } from './Message/Message';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const name = useSelector(selectFilterName);
-  const loading = useSelector(selectLoading);
-  const messageError = useSelector(selectErrorMessage);
-  const visibleContacts = useSelector(selectVisibleContacts);
+  const contacts = useSelector(selectors.selectContacts);
+  const name = useSelector(selectors.selectFilterName);
+  const loading = useSelector(selectors.selectLoading);
+  const messageError = useSelector(selectors.selectErrorMessage);
+  const visibleContacts = useSelector(selectors.selectVisibleContacts);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(operations.fetchContacts());
   }, [dispatch]);
 
   const reviewNameInContacts = name => {
@@ -37,11 +26,11 @@ export const App = () => {
   };
 
   const addContact = contact => {
-    dispatch(addNewContact(contact));
+    dispatch(operations.addNewContact(contact));
   };
 
   const removeContact = removeContactId => {
-    dispatch(deleteContact(removeContactId));
+    dispatch(operations.deleteContact(removeContactId));
   };
 
   const changeFilter = e => {
