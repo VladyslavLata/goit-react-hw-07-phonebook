@@ -7,10 +7,11 @@ import { Filter } from './Filter/Filter';
 import { Spinner } from './Spinner/Spinner';
 import { filter } from 'redux/contacts/contactsSlice';
 import {
-  getContacts,
-  getFilterName,
-  getErrorMessage,
-  getLoading,
+  selectContacts,
+  selectFilterName,
+  selectErrorMessage,
+  selectLoading,
+  selectVisibleContacts,
 } from 'redux/contacts/selectors';
 import {
   fetchContacts,
@@ -21,10 +22,11 @@ import { Message } from './Message/Message';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const name = useSelector(getFilterName);
-  const loading = useSelector(getLoading);
-  const messageError = useSelector(getErrorMessage);
+  const contacts = useSelector(selectContacts);
+  const name = useSelector(selectFilterName);
+  const loading = useSelector(selectLoading);
+  const messageError = useSelector(selectErrorMessage);
+  const visibleContacts = useSelector(selectVisibleContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -46,14 +48,6 @@ export const App = () => {
     dispatch(filter(e.currentTarget.value.trimStart()));
   };
 
-  const getVisibleContacts = () => {
-    const nameNormalized = name.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(nameNormalized)
-    );
-  };
-
-  const visibleContacts = getVisibleContacts();
   return (
     <>
       <Section title="Phonebook">
