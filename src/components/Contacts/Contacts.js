@@ -2,11 +2,14 @@ import PropTypes from 'prop-types';
 import { Box } from 'components/Box/Box';
 import { Number } from './Contacts.styled';
 import { ButtonDelete } from 'components/ButtonDelete/ButtonDelete';
+import { useSelector } from 'react-redux';
+import { selectVisibleContacts } from 'redux/contacts/selectors';
 
-export const Contacts = ({ contacts, onRemoveContact }) => {
+export const Contacts = ({ onRemoveContact }) => {
+  const visibleContacts = useSelector(selectVisibleContacts);
   return (
     <Box as="ul" py={4}>
-      {contacts.map(({ name, phone, id }) => (
+      {visibleContacts.map(({ name, phone, id }) => (
         <Box
           as="li"
           p={3}
@@ -30,12 +33,5 @@ export const Contacts = ({ contacts, onRemoveContact }) => {
 };
 
 Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
   onRemoveContact: PropTypes.func.isRequired,
 };

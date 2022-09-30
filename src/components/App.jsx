@@ -54,10 +54,7 @@ export const App = () => {
         />
         {messageError && <Message message={messageError} />}
         {visibleContacts.length > 0 && (
-          <Contacts
-            contacts={visibleContacts}
-            onRemoveContact={removeContact}
-          />
+          <Contacts onRemoveContact={removeContact} />
         )}
       </Section>
     </>
