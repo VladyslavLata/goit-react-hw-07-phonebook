@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import { LabelName, AddButton } from './Phonebook.styled';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { selectLoading } from 'redux/contacts/selectors';
 
 const ErrorText = styled(ErrorMessage)`
   color: red;
@@ -37,6 +39,7 @@ const initialValues = {
 };
 
 export const PhonebookForm = ({ onAddContact, onReviewName }) => {
+  const loading = useSelector(selectLoading);
   const handleSubmit = (values, actions) => {
     if (onReviewName(values.name)) {
       alert(`${values.name} is already in contacts.`);
@@ -63,7 +66,9 @@ export const PhonebookForm = ({ onAddContact, onReviewName }) => {
           <Field type="tel" name="phone" />
           <ErrorText component="p" name="phone" />
         </label>
-        <AddButton type="submit">Add contact</AddButton>
+        <AddButton type="submit" disabled={loading}>
+          Add contact
+        </AddButton>
       </Form>
     </Formik>
   );
